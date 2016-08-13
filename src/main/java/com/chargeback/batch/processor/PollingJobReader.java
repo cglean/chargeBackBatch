@@ -12,18 +12,18 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import com.chargeback.batch.vo.ChargeBackRequest;
+import com.chargeback.batch.vo.ChargeBackUsage;
 
-public class PollingJobReader implements ItemReader<List<ChargeBackRequest>> {
+public class PollingJobReader implements ItemReader<List<ChargeBackUsage>> {
 
 	@Override
-	public List<ChargeBackRequest> read()
+	public List<ChargeBackUsage> read()
 			throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
 		
-		final String METRICS_URL = "http://metricsfetchdemo-unflaming-overcensoriousness.cfapps.io/metrics/getmetrics";
+		final String METRICS_URL = "http://metricsfetchdemo-unflaming-overcensoriousness.cfapps.io/metrics/getInstanceMetrics";
 		RestTemplate restTemplate = new RestTemplate();
-		final ResponseEntity<List<ChargeBackRequest>> response = restTemplate.exchange(METRICS_URL, HttpMethod.GET, HttpEntity.EMPTY,
-				new ParameterizedTypeReference<List<ChargeBackRequest>>() {
+		final ResponseEntity<List<ChargeBackUsage>> response = restTemplate.exchange(METRICS_URL, HttpMethod.GET, HttpEntity.EMPTY,
+				new ParameterizedTypeReference<List<ChargeBackUsage>>() {
 				});
 		return response.getBody();
 	}

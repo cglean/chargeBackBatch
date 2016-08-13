@@ -6,19 +6,21 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import com.chargeback.batch.vo.ChargeBackUsageReq;
+import com.chargeback.batch.vo.ChargeBackUsage;
 
-public class PollingJobWriter implements ItemWriter<ChargeBackUsageReq> {
-
+public class PollingJobWriter implements ItemWriter<List<ChargeBackUsage>> {
 	
-	@Override
-	public void write(List<? extends ChargeBackUsageReq> usage) throws Exception {
+	private static final String  postURL =  "http://metricsfetchdemo-unflaming-overcensoriousness.cfapps.io/metrics/submit";
 
+	@Override
+	public void write(List<? extends List<ChargeBackUsage>> usageList) throws Exception {
 		RestTemplate restTemplate = new RestTemplate();
-		for (ChargeBackUsageReq usageReq : usage) {
-			ResponseEntity<Boolean> respEntity = restTemplate.postForEntity("url", usageReq, Boolean.class);
+		for (List<ChargeBackUsage> usageReq : usageList) {
+			ResponseEntity<Boolean> respEntity = restTemplate.postForEntity(postURL, usageReq, Boolean.class);
 		}
 
+		
 	}
 
+	
 }
