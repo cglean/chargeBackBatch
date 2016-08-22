@@ -1,8 +1,6 @@
 package com.chargeback.batch.configuration;
 
 import java.util.Date;
-import java.util.List;
-
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -13,9 +11,9 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
-import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,7 +41,7 @@ public class BatchConfiguration {
     
     
     
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?")
     public void perform() throws Exception {
 
         System.out.println("Job Started at :" + new Date());
@@ -73,7 +71,7 @@ public class BatchConfiguration {
     @Bean
     public Step orderStep() {
         return stepBuilderFactory.get("processStep")
-                .<List<ChargeBackUsage>, List<ChargeBackUsage>> chunk(1)
+                .<ChargeBackUsage, ChargeBackUsage> chunk(1)
                 .reader(reader())
                 .writer(writer())
                 .build();
@@ -82,12 +80,13 @@ public class BatchConfiguration {
  
 
     @Bean
+    @StepScope
     public PollingJobReader reader() {
      return new PollingJobReader();
     }
     
     @Bean
-    public ItemWriter<List<ChargeBackUsage>> writer() {
+    public PollingJobWriter writer() {
         return new PollingJobWriter();
     }
 
