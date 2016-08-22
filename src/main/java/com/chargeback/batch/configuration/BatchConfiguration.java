@@ -61,7 +61,7 @@ public class BatchConfiguration {
         return jobBuilderFactory.get("processPollingJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener())
-                .flow(orderStep())
+                .flow(pollStep())
                 .end()
                 .build();
     }
@@ -69,7 +69,7 @@ public class BatchConfiguration {
    
 
     @Bean
-    public Step orderStep() {
+    public Step pollStep() {
         return stepBuilderFactory.get("processStep")
                 .<ChargeBackUsage, ChargeBackUsage> chunk(1)
                 .reader(reader())
