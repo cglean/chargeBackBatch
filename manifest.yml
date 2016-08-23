@@ -1,6 +1,6 @@
 ---
 applications:
-- name: chargebackbatch
+- name: chargeback-batch
   memory: 512M
   random-route: true
-path: target/chargeBackBatch-0.0.1-SNAPSHOT.jar
+path: target/chargeback-batch-0.0.1-SNAPSHOT.jar
