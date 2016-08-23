@@ -10,7 +10,7 @@ import com.chargeback.batch.vo.ChargeBackUsage;
 
 public class PollingJobWriter implements ItemWriter<ChargeBackUsage> {
 	
-	private static final String  postURL =  "http://localhost:8081/metrics/submit";
+	private static final String  postURL =  "http://chargeback-api.cglean.com/metrics/submit";
 
 	@Override
 	public void write(List<? extends ChargeBackUsage> usageReq) throws Exception {
