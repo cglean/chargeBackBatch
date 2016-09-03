@@ -27,7 +27,7 @@ import com.chargeback.batch.vo.ChargeBackUsage;
 
 @Configuration
 @EnableBatchProcessing
-@Import({BatchScheduler.class})
+@Import({BatchScheduler.class, ConsolidationBatchConfiguration.class})
 public class BatchConfiguration {
 
 	@Autowired
@@ -39,23 +39,16 @@ public class BatchConfiguration {
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
     
-    
-    
-    @Scheduled(cron = "0 0/10 * * * ?")
+    @Scheduled(cron = "0 0/2 * * * ?")
     public void perform() throws Exception {
 
         System.out.println("Job Started at :" + new Date());
-
         JobParameters param = new JobParametersBuilder().addString("JobID",
                 String.valueOf(System.currentTimeMillis())).toJobParameters();
-
         JobExecution execution = jobLauncher.run(processPollingJob(), param);
-
         System.out.println("Job finished with status :" + execution.getStatus());
     }
-    
-    
-    
+
     @Bean
     public Job processPollingJob() {
         return jobBuilderFactory.get("processPollingJob")
@@ -65,8 +58,6 @@ public class BatchConfiguration {
                 .end()
                 .build();
     }
-    
-   
 
     @Bean
     public Step pollStep() {
@@ -76,8 +67,6 @@ public class BatchConfiguration {
                 .writer(writer())
                 .build();
     }
-    
- 
 
     @Bean
     @StepScope

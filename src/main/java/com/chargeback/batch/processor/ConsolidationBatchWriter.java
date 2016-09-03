@@ -10,14 +10,11 @@ import com.chargeback.batch.vo.ChargeBackUsageSummary;
 
 public class ConsolidationBatchWriter implements ItemWriter<ChargeBackUsageSummary>{
 
-	private static final String  postURL =  "http://chargeback-api.cglean.com/metrics/submi/summaryt";
+	private static final String  postURL =  "http://localhost:8081/metrics/submit/summary";
 	@Override
 	public void write(List<? extends ChargeBackUsageSummary> chargeBackUsageSummaryList) throws Exception {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<Boolean> respEntity = restTemplate.postForEntity(postURL, chargeBackUsageSummaryList, Boolean.class);
 	}
-
-	
-	
 	
 }

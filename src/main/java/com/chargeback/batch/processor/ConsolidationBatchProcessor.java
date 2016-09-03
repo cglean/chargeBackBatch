@@ -1,5 +1,7 @@
 package com.chargeback.batch.processor;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 
@@ -18,7 +20,7 @@ public class ConsolidationBatchProcessor implements ItemProcessor<List<ChargeBac
 			@Override
 			public ChargeBackUsageSummary apply(List<ChargeBackUsage> chargebackUsageList) {
 			ChargeBackUsageSummary chargeBackUsageSummary = new ChargeBackUsageSummary();
-
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			chargeBackUsageSummary.setCpu(chargebackUsageList.stream()
 					.mapToDouble(chargeBackUsage -> Double.valueOf(chargeBackUsage.getCpu())).sum());
 			chargeBackUsageSummary.setDisk(chargebackUsageList.stream().mapToLong(chargeBackUsage -> Long.valueOf(chargeBackUsage.getDisk())).sum());
@@ -27,6 +29,9 @@ public class ConsolidationBatchProcessor implements ItemProcessor<List<ChargeBac
 			chargeBackUsageSummary.setOrgName(chargebackUsageList.get(0).getOrgName());
 			chargeBackUsageSummary.setSpaceName(chargebackUsageList.get(0).getSpaceName());
 			chargeBackUsageSummary.setInstanceIndex(Integer.valueOf(chargebackUsageList.get(0).getInstanceIndex()));
+			chargeBackUsageSummary.setFromDate(dateFormat.format(new Date()));
+			chargeBackUsageSummary.setToDate(dateFormat.format(new Date()));
+
 				return chargeBackUsageSummary;
 			}
 		};

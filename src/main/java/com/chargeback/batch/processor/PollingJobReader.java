@@ -23,7 +23,7 @@ public class PollingJobReader implements ItemReader<ChargeBackUsage> {
 	public PollingJobReader() {
 		super();
 		
-		final String METRICS_URL = "http://chargeback-api.cglean.com/metrics/getInstanceMetrics";
+		final String METRICS_URL = "http://localhost:8081/metrics/getInstanceMetrics";
 		RestTemplate restTemplate = new RestTemplate();
 		final ResponseEntity<List<ChargeBackUsage>> response = restTemplate.exchange(METRICS_URL, HttpMethod.GET, HttpEntity.EMPTY,
 				new ParameterizedTypeReference<List<ChargeBackUsage>>() {

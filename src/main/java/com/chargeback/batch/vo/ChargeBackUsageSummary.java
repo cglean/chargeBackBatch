@@ -10,6 +10,21 @@ public class ChargeBackUsageSummary {
 	private String appname;
 	private String spaceName;
 	private int instanceIndex;
+	private String fromDate;
+	private String toDate;
+	
+	public String getFromDate() {
+		return fromDate;
+	}
+	public void setFromDate(String fromDate) {
+		this.fromDate = fromDate;
+	}
+	public String getToDate() {
+		return toDate;
+	}
+	public void setToDate(String toDate) {
+		this.toDate = toDate;
+	}
 	public double getCpu() {
 		return cpu;
 	}
