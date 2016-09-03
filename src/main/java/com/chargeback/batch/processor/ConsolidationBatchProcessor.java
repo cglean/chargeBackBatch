@@ -22,9 +22,9 @@ public class ConsolidationBatchProcessor implements ItemProcessor<List<ChargeBac
 			ChargeBackUsageSummary chargeBackUsageSummary = new ChargeBackUsageSummary();
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			chargeBackUsageSummary.setCpu(chargebackUsageList.stream()
-					.mapToDouble(chargeBackUsage -> Double.valueOf(chargeBackUsage.getCpu())).sum());
-			chargeBackUsageSummary.setDisk(chargebackUsageList.stream().mapToLong(chargeBackUsage -> Long.valueOf(chargeBackUsage.getDisk())).sum());
-			chargeBackUsageSummary.setMemory(chargebackUsageList.stream().mapToLong(chargeBackUsage -> Long.valueOf(chargeBackUsage.getMemory())).sum());
+					.mapToDouble(chargeBackUsage -> Double.valueOf(chargeBackUsage.getCpu())).average().getAsDouble());
+			chargeBackUsageSummary.setDisk(chargebackUsageList.stream().mapToDouble(chargeBackUsage -> Double.valueOf(chargeBackUsage.getDisk())).average().getAsDouble());
+			chargeBackUsageSummary.setMemory(chargebackUsageList.stream().mapToDouble(chargeBackUsage -> Long.valueOf(chargeBackUsage.getMemory())).average().getAsDouble());
 			chargeBackUsageSummary.setAppname(chargebackUsageList.get(0).getAppname());
 			chargeBackUsageSummary.setOrgName(chargebackUsageList.get(0).getOrgName());
 			chargeBackUsageSummary.setSpaceName(chargebackUsageList.get(0).getSpaceName());

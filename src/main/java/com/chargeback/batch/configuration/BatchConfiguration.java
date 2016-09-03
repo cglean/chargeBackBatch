@@ -2,6 +2,8 @@ package com.chargeback.batch.configuration;
 
 import java.util.Date;
 
+import javax.inject.Provider;
+
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
@@ -23,6 +25,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import com.chargeback.batch.processor.NotificationListener;
 import com.chargeback.batch.processor.PollingJobReader;
 import com.chargeback.batch.processor.PollingJobWriter;
+import com.chargeback.batch.rest.client.ChargeBackApiClient;
 import com.chargeback.batch.vo.ChargeBackUsage;
 
 @Configuration
@@ -39,6 +42,10 @@ public class BatchConfiguration {
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
     
+    @Autowired 
+    Provider<ChargeBackApiClient> clientFactory; 
+    
+
     @Scheduled(cron = "0 0/2 * * * ?")
     public void perform() throws Exception {
 
@@ -71,7 +78,8 @@ public class BatchConfiguration {
     @Bean
     @StepScope
     public PollingJobReader reader() {
-     return new PollingJobReader();
+    	ChargeBackApiClient chargeBackApiClient = clientFactory.get();
+     return new PollingJobReader(chargeBackApiClient);
     }
     
     @Bean
@@ -83,4 +91,7 @@ public class BatchConfiguration {
     public JobExecutionListener listener() {
         return new NotificationListener();
     }
+   
+   
+   
 }

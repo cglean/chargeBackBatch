@@ -9,6 +9,7 @@ import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -33,6 +34,7 @@ import com.chargeback.batch.vo.ChargeBackUsage;
 import com.chargeback.batch.vo.ChargeBackUsageSummary;
 
 @Configuration
+@EnableBatchProcessing
 public class ConsolidationBatchConfiguration {
 	@Autowired
     private SimpleJobLauncher jobLauncher;
