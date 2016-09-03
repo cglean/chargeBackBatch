@@ -3,6 +3,8 @@ package com.chargeback.batch.configuration;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Provider;
+
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
@@ -19,17 +21,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.client.RestTemplate;
 
 import com.chargeback.batch.processor.ConsolidationBatchProcessor;
 import com.chargeback.batch.processor.ConsolidationBatchReader;
 import com.chargeback.batch.processor.ConsolidationBatchWriter;
 import com.chargeback.batch.processor.NotificationListener;
+import com.chargeback.batch.rest.client.ChargeBackApiClient;
 import com.chargeback.batch.vo.ChargeBackUsage;
 import com.chargeback.batch.vo.ChargeBackUsageSummary;
 
@@ -47,16 +45,14 @@ public class ConsolidationBatchConfiguration {
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
     
-    @Scheduled(cron = "0 0/10 * * * ?")
+    @Autowired 
+    Provider<ChargeBackApiClient> clientFactory; 
+    
+    @Scheduled(cron = "0 0 01 * * *")
     public void runConsolidation() throws Exception {
 
         System.out.println("Job Started at :" + new Date());
-        RestTemplate restTemplate = new RestTemplate();
-    	 final String ORG_LIST_URL = "http://localhost:8081/metrics/getOrgList";
-    	 final ResponseEntity<List<String>> orgListResponse = restTemplate.exchange(ORG_LIST_URL, HttpMethod.GET, HttpEntity.EMPTY,
- 				new ParameterizedTypeReference<List<String>>() {
- 				});
-    	 final List<String> orgList = orgListResponse.getBody();
+    	 final List<String> orgList = clientFactory.get().getOrgList();
     	 for(final String orgName : orgList){
     		 JobParameters param = new JobParametersBuilder().addString("JobID",
     	                String.valueOf(System.currentTimeMillis())).addString("orgName", orgName).toJobParameters();

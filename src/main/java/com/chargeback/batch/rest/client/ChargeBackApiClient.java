@@ -24,4 +24,8 @@ public interface ChargeBackApiClient {
 	
 	@RequestMapping(value="/metrics/submit",method=RequestMethod.POST , consumes=MediaType.APPLICATION_JSON_VALUE)
 	public void submitData(@RequestBody List<? extends ChargeBackUsage> usageList);	
+	
+	@RequestMapping(value = "/metrics/getOrgList", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<String> getOrgList();
+
 }

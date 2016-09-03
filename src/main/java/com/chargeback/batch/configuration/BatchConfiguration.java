@@ -46,7 +46,7 @@ public class BatchConfiguration {
     Provider<ChargeBackApiClient> clientFactory; 
     
 
-    @Scheduled(cron = "0 0/2 * * * ?")
+    @Scheduled(cron = "0 0 0/6 * * ?")
     public void perform() throws Exception {
 
         System.out.println("Job Started at :" + new Date());
