@@ -24,10 +24,8 @@ public class ConsolidationBatchReader implements ItemReader<List<ChargeBackUsage
 	List<List<ChargeBackUsage>> listOfUsageList = new ArrayList<>();
 	int index;
 	
-	@Autowired ChargeBackApiClient chargeBackApiClient;
-
 	@Autowired
-	public ConsolidationBatchReader(@Value("#{jobParameters['orgName']}") final String  orgName) {
+	public ConsolidationBatchReader(@Value("#{jobParameters['orgName']}") final String  orgName, ChargeBackApiClient chargeBackApiClient) {
 		/*Consolidation would happen for Previous Day*/
 		/*Consolidation Frequency is daily*/
 		final Calendar prevDateCal = Calendar.getInstance();
@@ -36,9 +34,8 @@ public class ConsolidationBatchReader implements ItemReader<List<ChargeBackUsage
 		final String fromDate = dateFormat.format(prevDateCal.getTime());
 		final String toDate = dateFormat.format(prevDateCal.getTime());
 		
-		if(null !=chargeBackApiClient){
 		listOfUsageList = new ArrayList<>(chargeBackApiClient.getHistoricalData(fromDate, toDate, orgName).values());
-		}
+		
 		index = 0;
 	}
 

@@ -87,7 +87,9 @@ public class ConsolidationBatchConfiguration {
     @Bean
     @StepScope
     public ConsolidationBatchReader consolidationReader(@Value("#{jobParameters['orgName']}") final String orgName) {
-     return new ConsolidationBatchReader(orgName);
+    	ChargeBackApiClient chargeBackApiClient = clientFactory.get();
+
+    	return new ConsolidationBatchReader(orgName, chargeBackApiClient);
     }
     
     @Bean
