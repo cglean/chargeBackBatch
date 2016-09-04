@@ -33,9 +33,7 @@ public class ConsolidationBatchReader implements ItemReader<List<ChargeBackUsage
 		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		final String fromDate = dateFormat.format(prevDateCal.getTime());
 		final String toDate = dateFormat.format(prevDateCal.getTime());
-		
 		listOfUsageList = new ArrayList<>(chargeBackApiClient.getHistoricalData(fromDate, toDate, orgName).values());
-		
 		index = 0;
 	}
 

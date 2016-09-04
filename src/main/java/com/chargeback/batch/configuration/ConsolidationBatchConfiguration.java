@@ -1,4 +1,4 @@
-package com.chargeback.batch.configuration;
+/*package com.chargeback.batch.configuration;
 
 import java.util.Date;
 import java.util.List;
@@ -34,8 +34,7 @@ import com.chargeback.batch.vo.ChargeBackUsageSummary;
 @Configuration
 @EnableBatchProcessing
 public class ConsolidationBatchConfiguration {
-	@Autowired
-    private SimpleJobLauncher jobLauncher;
+	
 	
 	@Autowired
     public JobBuilderFactory jobBuilderFactory;
@@ -56,7 +55,8 @@ public class ConsolidationBatchConfiguration {
     	 for(final String orgName : orgList){
     		 JobParameters param = new JobParametersBuilder().addString("JobID",
     	                String.valueOf(System.currentTimeMillis())).addString("orgName", orgName).toJobParameters();
-    	        JobExecution execution = jobLauncher.run(processConsolidationJob(), param);
+    	     final SimpleJobLauncher jobLauncher = new SimpleJobLauncher();  
+    		 JobExecution execution = jobLauncher.run(processConsolidationJob(), param);
     	        System.out.println("Job finished with status :" + execution.getStatus());
     	 }
     	 
@@ -108,3 +108,4 @@ public class ConsolidationBatchConfiguration {
         return new NotificationListener();
     }
 }
+*/
