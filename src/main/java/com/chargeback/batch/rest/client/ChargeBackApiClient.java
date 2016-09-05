@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.chargeback.batch.vo.ChargeBackUsage;
+import com.chargeback.batch.vo.ChargeBackUsageSummary;
 
-@FeignClient(name="CHARGEBACK-API", url="http://chargeback-api.cglean.com")
+@FeignClient(name="CHARGEBACK-API")
 public interface ChargeBackApiClient {
 
 	@RequestMapping(value = "/metrics/getInstanceMetrics", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -27,5 +28,8 @@ public interface ChargeBackApiClient {
 	
 	@RequestMapping(value = "/metrics/getOrgList", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<String> getOrgList();
+	
+	@RequestMapping(value = "/metrics/submit/summary", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public List<String> saveConsolidatedData(@RequestBody List<? extends ChargeBackUsageSummary> chargeBackUsageSummaryList);
 
 }
