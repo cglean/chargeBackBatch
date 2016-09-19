@@ -48,7 +48,7 @@ import com.chargeback.batch.vo.ChargeBackUsageSummary;
 	private JobLauncher jobLauncher;
 	
 
-	@Scheduled(cron = "0 0 0/6 * * ?")
+	@Scheduled(cron = "0 0/1 0 * * ?")
 	public void perform() throws Exception {
 
 		System.out.println("Job Started at :" + new Date());

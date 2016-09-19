@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.chargeback.batch.vo.ChargeBackUsage;
 import com.chargeback.batch.vo.ChargeBackUsageSummary;
 
-@FeignClient(name="CHARGEBACK-API")
+@FeignClient(name="CHARGEBACK-API", url="http://localhost:8081")
 public interface ChargeBackApiClient {
 
 	@RequestMapping(value = "/metrics/getInstanceMetrics", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
