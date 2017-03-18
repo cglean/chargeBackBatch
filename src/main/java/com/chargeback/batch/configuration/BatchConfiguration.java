@@ -32,8 +32,7 @@ import com.chargeback.batch.vo.ChargeBackUsage;
 import com.chargeback.batch.vo.ChargeBackUsageSummary;
 
 @Configuration
-/*@Import({BatchScheduler.class})
-*/public class BatchConfiguration {
+public class BatchConfiguration {
 
 	@Autowired
 	public JobBuilderFactory jobBuilderFactory;
@@ -48,7 +47,7 @@ import com.chargeback.batch.vo.ChargeBackUsageSummary;
 	private JobLauncher jobLauncher;
 	
 
-	@Scheduled(cron = "0 0/1 0 * * ?")
+	@Scheduled(fixedRate=50000)
 	public void perform() throws Exception {
 
 		System.out.println("Job Started at :" + new Date());
@@ -87,7 +86,7 @@ import com.chargeback.batch.vo.ChargeBackUsageSummary;
 		return new NotificationListener();
 	}
 
-	@Scheduled(cron = "0 0 01 * * *")
+	@Scheduled(fixedRate=100000)
 	public void runConsolidation() throws Exception {
 
 		System.out.println("Job Started at :" + new Date());
