@@ -47,7 +47,7 @@ public class BatchConfiguration {
 	private JobLauncher jobLauncher;
 	
 
-	@Scheduled(fixedRate=50000)
+	@Scheduled(fixedRate=60*60*1000)
 	public void perform() throws Exception {
 
 		System.out.println("Job Started at :" + new Date());
@@ -86,7 +86,7 @@ public class BatchConfiguration {
 		return new NotificationListener();
 	}
 
-	@Scheduled(fixedRate=100000)
+	@Scheduled(fixedRate=60*60*1000 * 5)
 	public void runConsolidation() throws Exception {
 
 		System.out.println("Job Started at :" + new Date());

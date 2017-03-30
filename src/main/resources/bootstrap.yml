@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: chargeback-batch
+  cloud:
+    config:
+      uri:  ${vcap.services.config-cb.credentials.url:http://localhost:8080}

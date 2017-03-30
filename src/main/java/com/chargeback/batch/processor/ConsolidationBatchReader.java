@@ -29,7 +29,7 @@ public class ConsolidationBatchReader implements ItemReader<List<ChargeBackUsage
 		/*Consolidation would happen for Previous Day*/
 		/*Consolidation Frequency is daily*/
 		final Calendar prevDateCal = Calendar.getInstance();
-		prevDateCal.roll(Calendar.DAY_OF_YEAR, 0);
+		prevDateCal.roll(Calendar.DAY_OF_YEAR, -1);
 		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		final String fromDate = dateFormat.format(prevDateCal.getTime());
 		final String toDate = dateFormat.format(prevDateCal.getTime());

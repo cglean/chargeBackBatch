@@ -5,8 +5,8 @@ applications:
   random-route: true
   path: target/chargeback-batch-0.0.1-SNAPSHOT.jar
   services:
-    - service-registry
-    - mysqlInstance
+    - eureka-cb
+    - config-cb
     
   env:
     SPRING_PROFILES_ACTIVE: cloud
